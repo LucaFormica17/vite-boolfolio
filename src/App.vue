@@ -1,9 +1,10 @@
 <script>
+import ProjectCard from './components/ProjectCard.vue';
 import axios from 'axios';
 
 export default {
   components:{
-    
+    ProjectCard,
   },
   data(){
     return{
@@ -17,17 +18,19 @@ export default {
     getProjects(){
       axios.get('http://127.0.0.1:8000/api/projects').then((response) => {
         this.projects = response.data.results;
-        console.log(this.projects);
       })
     }
   }
 }
 </script>
 <template lang="">
-  <div>
-    
+  <div class="container">
+    <h1 class="text-center">Boolfolio</h1>
+    <div class="row">
+      <ProjectCard v-for="project, index in this.projects" :key="index" :project="project" />
+    </div>
   </div>
 </template>
-<style lang="">
-  
+<style lang="scss">
+  @use './styles/generals.scss';
 </style>
