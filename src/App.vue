@@ -1,36 +1,36 @@
 <script>
-import ProjectCard from './components/ProjectCard.vue';
-import axios from 'axios';
+import AppMain from './components/AppMain.vue';
+import { store } from './store.js';
 
 export default {
   components:{
-    ProjectCard,
+    AppMain,
   },
   data(){
-    return{
-      projects: [],
-    }
-  },
-  created(){
-    this.getProjects();
-  },
-  methods: {
-    getProjects(){
-      axios.get('http://127.0.0.1:8000/api/projects').then((response) => {
-        this.projects = response.data.results;
-      })
+    return {
+      store,
     }
   }
 }
 </script>
-<template lang="">
+
+<template>
   <div class="container">
-    <h1 class="text-center">Boolfolio</h1>
     <div class="row">
-      <ProjectCard v-for="project, index in this.projects" :key="index" :project="project" />
+      <div class="col-2">
+        <div class="btn btn-sm btn-primary m-3">
+          <router-link :to="{ name: store.navbar[0].name}" class="text-white"> {{ store.navbar[0].label }} </router-link>
+        </div>
+        <div class="btn btn-sm btn-primary m-3">
+          <router-link :to="{ name: store.navbar[1].name}" class="text-white"> {{ store.navbar[1].label }} </router-link>
+        </div>
+      </div>
     </div>
   </div>
+  <router-view></router-view>
 </template>
+
 <style lang="scss">
-  @use './styles/generals.scss';
+@use './styles/generals.scss';
+
 </style>
